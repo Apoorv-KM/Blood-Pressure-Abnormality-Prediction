@@ -34,13 +34,7 @@ print(df.head())
 df = df.dropna()
 
 
-# Split features and target
-# Patient_Number is dropped since it has no predictive value
-X = df.drop(["Blood_Pressure_Abnormality", "Patient_Number"], axis=1)
-y = df["Blood_Pressure_Abnormality"]
-
-
-# Train-test split with stratification to preserve class balance
+# Train-test split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
@@ -51,34 +45,27 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-
-# ------------------
-# Logistic Regression
-# ------------------
+# Logistic Regression model
 lr_model = LogisticRegression(max_iter=1000)
 lr_model.fit(X_train, y_train)
 lr_pred = lr_model.predict(X_test)
 lr_accuracy = accuracy_score(y_test, lr_pred)
 
-
-# ------------------
-# Random Forest
-# ------------------
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+# Random Forest model
+rf_model = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42
+)
 rf_model.fit(X_train, y_train)
 rf_pred = rf_model.predict(X_test)
 rf_accuracy = accuracy_score(y_test, rf_pred)
 
-
-# Print accuracy comparison
+# Predictions and accuracy
 print("\nModel Accuracies:")
 print("Logistic Regression Accuracy:", lr_accuracy)
 print("Random Forest Accuracy:", rf_accuracy)
 
-
-# ------------------
-# Confusion Matrix
-# ------------------
+# Confusion Matrix Visualization
 cm = confusion_matrix(y_test, rf_pred)
 disp = ConfusionMatrixDisplay(
     confusion_matrix=cm, display_labels=["Normal", "Abnormal"]
@@ -88,10 +75,7 @@ plt.title("Blood Pressure Abnormality Classification")
 plt.savefig("confusion_matrix.png", bbox_inches="tight")
 plt.show()
 
-
-# ------------------
-# Feature Importance (Random Forest)
-# ------------------
+# Feature Importance Plot
 importances = rf_model.feature_importances_
 features = X.columns
 
@@ -102,11 +86,8 @@ plt.title("Feature Importance for BP Abnormality Prediction")
 plt.savefig("feature_importance.png", bbox_inches="tight")
 plt.show()
 
-
-# ------------------
-# Model Accuracy Comparison
-# ------------------
-models = ["Logistic Regression", "Random Forest"]
+# Model Comparison Plot
+models = ['Logistic Regression', 'Random Forest']
 accuracies = [lr_accuracy, rf_accuracy]
 
 plt.figure(figsize=(6, 4))
@@ -116,3 +97,4 @@ plt.title("Model Comparison")
 plt.ylim(0, 1)
 plt.savefig("model_comparison.png", bbox_inches="tight")
 plt.show()
+
