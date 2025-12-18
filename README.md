@@ -25,23 +25,8 @@ and lifestyle features. The dataset is sourced from Kaggle.
 ## Dataset
 Kaggle – Blood Pressure Dataset
 
+## Model Insights
+- Random Forest outperformed Logistic Regression due to its ability to model non-linear relationships among physiological features.
+- Ensemble learning allowed better handling of feature interactions and variance in the dataset.
 
-```bash
-pip install pandas numpy matplotlib scikit-learn kagglehub
-python blood_pressure_ml.py
 
-Save it.
-
----
-
-## 🚀 STEP 2: Push to GitHub (Clean Way)
-
-Open terminal in that folder and run:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: BP abnormality prediction using ML"
-git branch -M main
-git remote add origin https://github.com/Apoorv-KM/Blood-Pressure-Abnormality-Prediction.git
-git push -u origin main
